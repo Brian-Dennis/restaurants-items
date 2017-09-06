@@ -17,6 +17,11 @@ import httplib2
 import json
 import requests
 
+
+# TODO FINISH GOOGLE SIGNIN AUTHORIZATION. GOOGLE LOGGED_IN STILL SHOWS REGISTER AND LOGIN BUTTONS
+# THIS NEEDS TO BE FIXED ONLY FOR THE GOOGLE LOGIN SO FAR
+
+
 app = Flask(__name__)
 
 # Config MySQL
@@ -319,7 +324,7 @@ def newRestaurant():
     if request.method == 'POST':
         newRestaurant = Restaurant(name=request.form['name'])
         session.add(newRestaurant)
-        flash('New Restaurant %s Successfully Created' % newRestaurant.name)
+        flash('New Restaurant %s Successfully Created' % newRestaurant.name, 'success')
         session.commit()
         return redirect(url_for('showRestaurants'))
     else:
@@ -334,7 +339,7 @@ def editRestaurant(restaurant_id):
     if request.method == 'POST':
         if request.form['name']:
             editedRestaurant.name = request.form['name']
-            flash('Restaurant Successfully Edited %s' % editedRestaurant.name)
+            flash('Restaurant Successfully Edited %s' % editedRestaurant.name, 'success')
             return redirect(url_for('showRestaurants'))
     else:
         return render_template(
@@ -349,7 +354,7 @@ def deleteRestaurant(restaurant_id):
     if request.method == 'POST':
         session.delete(restaurantToDelete)
         flash(
-            '%s Successfully Deleted' % restaurantToDelete.name)
+            '%s Successfully Deleted' % restaurantToDelete.name, 'success')
         session.commit()
         return redirect(url_for(
                 'showRestaurants', restaurant_id=restaurant_id))
@@ -382,7 +387,7 @@ def newMenuItem(restaurant_id):
                            restaurant_id=restaurant_id)
         session.add(newItem)
         session.commit()
-        flash('New Menu %s Item Successfully Created' % (newItem.name))
+        flash('New Menu %s Item Successfully Created' % (newItem.name), 'success')
         return redirect(url_for('showMenu', restaurant_id=restaurant_id))
     else:
         return render_template('newmenuitem.html', restaurant_id=restaurant_id)
