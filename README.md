@@ -7,7 +7,7 @@ This project is a restauarant menu item api, with json endpoints and google auth
 
 ## How to Run
 
-You will need to have Python, Vagrant and VirtualBox installed. This project uses a pre-congfigured Vagrant vm which has the [Flask](http://flask.pocoo.org/) server installed.
+This project I decided to use virtualenv rather then vagrant and virtualbox.
 
 ```bash
 source venv/scripts/activate (Windows)
