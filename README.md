@@ -12,7 +12,7 @@ This project I decided to use virtualenv rather then vagrant and virtualbox.
 ```bash
 source venv/scripts/activate (Windows)
 source venv/bin/activate (Unix)
-install requirements.txt
+pip install -r requirements.txt
 ```
 
 Within the virtual machine change in to the shared directory by running
