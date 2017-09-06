@@ -1,4 +1,3 @@
-BEGIN TRANSACTION;
 CREATE TABLE IF NOT EXISTS `users` (
 	`id`	TEXT,
 	`name`	TEXT,
