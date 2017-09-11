@@ -15,7 +15,7 @@ source venv/bin/activate (Unix)
 pip install -r requirements.txt
 ```
 
-Within the virtual machine change in to the shared directory by running
+Within the terminal run
 
 ```bash
 $ python project.py
