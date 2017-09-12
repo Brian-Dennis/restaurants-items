@@ -15,7 +15,6 @@ source venv/scripts/activate (Windows)
 source venv/bin/activate (Unix)
 pip install -r requirements.txt
 ```
-
 Within the terminal run
 
 ```bash
