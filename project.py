@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from flask import Flask, render_template, request
 from flask import redirect, jsonify, url_for, flash
 from sqlalchemy import create_engine, asc
@@ -41,7 +43,8 @@ def showLogin():
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
     """
-    Gathers data from Google Sign In API and places it inside a session variable.
+    Gathers data from Google Sign In API
+    and places it inside a session variable.
     """
     # Validate state token
     if request.args.get('state') != login_session['state']:
@@ -130,7 +133,7 @@ def gconnect():
     output += ' " style = "width: 300px; height: 300px;' \
         'border-radius: 150px;-webkit-border-radius: 150px;' \
         '-moz-border-radius: 150px;"> '
-    flash("you are now logged in as %s" % login_session['username'])
+    flash("you are now logged in as %s" % login_session['username'], 'success')
     return output
 
 
@@ -143,10 +146,12 @@ def createUser(login_session):
     user = session.query(User).filter_by(email=login_session['email']).one()
     return user.id
 
+
 # Gathering user information form model
 def getUserInfo(user_id):
     user = session.query(User).filter_by(id=user_id).one()
     return user
+
 
 # Trying to get user id and if error throw and exception
 def getUserID(email):
@@ -226,9 +231,11 @@ def newRestaurant():
         return redirect('/login')
     if request.method == 'POST':
         newRestaurant = Restaurant(
-            name=request.form['name'], user_id=login_session['user_id'])
+            name=request.form['name'],
+            user_id=login_session['user_id'])
         session.add(newRestaurant)
-        flash('New Restaurant %s Successfully Created' % newRestaurant.name)
+        flash('New Restaurant %s Successfully Created'
+              % newRestaurant.name, 'success')
         session.commit()
         return redirect(url_for('showRestaurants'))
     else:
@@ -285,11 +292,13 @@ def deleteRestaurant(restaurant_id):
 @app.route('/restaurant/<int:restaurant_id>/')
 @app.route('/restaurant/<int:restaurant_id>/menu/')
 def showMenu(restaurant_id):
-    restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
+    restaurant = session.query(Restaurant).filter_by(
+                                                    id=restaurant_id).one()
     creator = getUserInfo(restaurant.user_id)
     items = session.query(MenuItem).filter_by(
         restaurant_id=restaurant_id).all()
-    if 'username' not in login_session or creator.id != login_session['user_id']:
+    if 'username' not in login_session or creator.id != login_session[
+            'user_id']:
         return render_template('publicmenu.html',
                                items=items, restaurant=restaurant,
                                creator=creator)
@@ -303,26 +312,20 @@ def showMenu(restaurant_id):
 @app.route('/restaurant/<int:restaurant_id>/menu/new/',
            methods=['GET', 'POST'])
 def newMenuItem(restaurant_id):
-    if 'username' not in login_session:
-        return redirect('/login')
     restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
-    if login_session['user_id'] != restaurant.user_id:
-        return "<script>function myFunction() "
-        "{alert('You are not authorized to add menu items "
-        "to this restaurant. Please create your own restaurant in "
-        "order to add items.');}</script><body onload='myFunction()''>"
-        if request.method == 'POST':
-            newItem = MenuItem(name=request.form['name'],
-                               description=request.form['description'],
-                               price=request.form['price'],
-                               course=request.form['course'],
-                               restaurant_id=restaurant_id,
-                               user_id=restaurant.user_id)
-            session.add(newItem)
-            session.commit()
-            flash('New Menu %s Item Successfully Created'
-                  % (newItem.name), 'success')
-            return redirect(url_for('showMenu', restaurant_id=restaurant_id))
+    if request.method == 'POST':
+        newItem = MenuItem(name=request.form['name'],
+                           description=request.form[
+                           'description'],
+                           price=request.form[
+                                              'price'],
+                           course=request.form['course'],
+                           restaurant_id=restaurant_id)
+        session.add(newItem)
+        session.commit()
+        flash('New Menu %s Item Successfully Created'
+              % (newItem.name), 'success')
+        return redirect(url_for('showMenu', restaurant_id=restaurant_id))
     else:
         return render_template('newmenuitem.html', restaurant_id=restaurant_id)
 
