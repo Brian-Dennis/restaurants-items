@@ -1,25 +1,20 @@
 {% extends 'main.html' %}
 {% block content %}
 
-    {% if session.logged_in %}
-        <a href="/logout" class="btn btn-warning btn-lg">Logout</a>
-    {% else %}
-        <div class="jumbotron text-center">
-            <!-- GOOGLE PLUS SIGN IN-->
-            <div id="signInButton">
-                <span class="g-signin" 
-                    data-scope="openid email" 
-                    data-clientid="627223386059-ct1npehinnp9q4eclvbv48g54ho8bdfu.apps.googleusercontent.com" 
-                    data-redirecturi="postmessage" 
-                    data-accesstype="offline" 
-                    data-cookiepolicy="single_host_origin" 
-                    data-callback="signInCallback"
-                    data-approvalprompt="force">
-                </span>
-            </div>
-            <div id="result"></div>
-            <a href="/email-login" class="btn btn-default btn-lg">Email Login</a>
+    <div class="jumbotron text-center">
+        <!-- GOOGLE PLUS SIGN IN-->
+        <div id="signInButton">
+            <span class="g-signin" 
+                data-scope="openid email" 
+                data-clientid="627223386059-ct1npehinnp9q4eclvbv48g54ho8bdfu.apps.googleusercontent.com" 
+                data-redirecturi="postmessage" 
+                data-accesstype="offline" 
+                data-cookiepolicy="single_host_origin" 
+                data-callback="signInCallback"
+                data-approvalprompt="force">
+            </span>
         </div>
-    {% endif %}
+        <div id="result"></div>
+    </div>
 
 {% endblock %}

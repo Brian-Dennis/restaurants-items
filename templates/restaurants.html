@@ -12,7 +12,11 @@
 <div class="row banner main">
     <div class="col-md-1"></div>
     <div class="col-md-11 padding-none">
-        <h1>Restaurants <small>Welcome {{ session.username }}</small></h1>
+        {%if 'username' in login_session %}
+            <h1>Restaurants <small>Welcome {{ session.username }}</small></h1>
+        {% else %}
+            <h1>Restaurants</h1>
+        {% endif %}
     </div>
 </div>
 
