@@ -10,11 +10,11 @@ This project is a restauarant menu item api, with json endpoints and google auth
 This project I decided to use virtualenv rather then vagrant and virtualbox.
 
 ```bash
+python -m venv venv
 source venv/scripts/activate (Windows)
 source venv/bin/activate (Unix)
 pip install -r requirements.txt
 ```
-
 Within the terminal run
 
 ```bash
