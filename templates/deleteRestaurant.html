@@ -4,9 +4,8 @@
 <form class="well" action="#" method='post'>
     <button type="submit" class="btn btn-danger delete" id="submit" type="submit">
         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Delete</button>
-    <a href="{{url_for('showRestaurants')}}">
-        <button class="btn btn-default delete">
-            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
+    <a class="btn btn-default" href="{{url_for('showRestaurants')}}">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
     </a>
 </form>
 {% endblock %}
